@@ -12,7 +12,7 @@ abstract class RetrofitClient { //TODO Retrofitin instance'sini olusturduk.. Seb
         @Volatile //TODO Aynı anda birden çok threadin erişimini engellemek için..
         private var INSTANCE: Retrofit? = null
 
-        private fun getRetrofit(): Retrofit {
+        fun getRetrofit():Retrofit {
             return INSTANCE ?: run {
 
                 synchronized(this) { // Aynı anda birden çok threadin erişimini engellemek için..
