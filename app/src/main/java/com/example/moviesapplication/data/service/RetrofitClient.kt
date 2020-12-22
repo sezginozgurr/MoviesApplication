@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClient {
     companion object {
 
-        val baseURL = "https://jsonplaceholder.typicode.com/"
+        val baseURL = "https://newsapi.org/v2/"
 
         @Volatile
         private var INSTANCE: Retrofit? = null

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.moviesapplication.data.modelNew.Response
+import com.example.moviesapplication.data.model.NewsResponse
 import com.example.moviesapplication.data.service.ApiService
 import com.example.moviesapplication.data.service.RetrofitClient
 import retrofit2.Call
@@ -12,14 +12,14 @@ import retrofit2.Callback
 
 class HomePageViewModel : ViewModel() {
 
-    private val mutableMovies: MutableLiveData<List<com.example.moviesapplication.data.modelNew.Response>> =
+    private val mutableMovies: MutableLiveData<NewsResponse> =
         MutableLiveData()
-    val moviesResponses: LiveData<List<com.example.moviesapplication.data.modelNew.Response>> =
+    val moviesResponses: LiveData<NewsResponse> =
         mutableMovies
 
     val api: ApiService = RetrofitClient.getRetrofit().create(ApiService::class.java)
 
-    val moviesResponse: Call<List<com.example.moviesapplication.data.modelNew.Response>> =
+    val moviesResponse: Call<NewsResponse> =
         api.getMovies()
 
     init {
@@ -28,15 +28,15 @@ class HomePageViewModel : ViewModel() {
 
     fun getMovies() {
         moviesResponse.enqueue(object :
-            Callback<List<com.example.moviesapplication.data.modelNew.Response>> {
+            Callback<NewsResponse> {
             override fun onResponse(
-                call: Call<List<Response>>,
-                response: retrofit2.Response<List<Response>>
+                call: Call<NewsResponse>,
+                response: retrofit2.Response<NewsResponse>
             ) {
                 mutableMovies.value = response.body()
             }
 
-            override fun onFailure(call: Call<List<Response>>, t: Throwable) {
+            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 
