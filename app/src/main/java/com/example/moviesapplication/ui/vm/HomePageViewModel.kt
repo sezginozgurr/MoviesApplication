@@ -32,7 +32,9 @@ class HomePageViewModel() : ViewModel() {
                 call: Call<MoviesResponse>,
                 response: Response<MoviesResponse>
             ) {
-                mutableMovies.value = response.body()
+                response.body().let {
+                    mutableMovies.value = it
+                }
             }
 
             override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {

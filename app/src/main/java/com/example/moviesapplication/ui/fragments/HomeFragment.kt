@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
         val homeViewModel =
             ViewModelProvider(this, HomePageViewModel.Factory()).get(HomePageViewModel::class.java)
         homeViewModel.moviesResponses.observe(viewLifecycleOwner) {
-
+            binding.recycler.adapter
         }
     }
 
