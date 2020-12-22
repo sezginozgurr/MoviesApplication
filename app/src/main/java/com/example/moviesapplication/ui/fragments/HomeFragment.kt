@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.fragment.findNavController
 import com.example.moviesapplication.R
 import com.example.moviesapplication.data.model.Article
@@ -18,7 +20,8 @@ import com.example.moviesapplication.ui.vm.HomePageViewModel
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-//    private val adapter = MoviesAdapter()
+    private var newsList = ArrayList<Article>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +39,11 @@ class HomeFragment : Fragment() {
         homeViewModel.moviesResponses.observe(viewLifecycleOwner) {
             Toast.makeText(context, it.status.toString(), Toast.LENGTH_SHORT).show()
 
-            binding.recycler.adapter = NewsAdapter(it.articles as ArrayList<Article?>) {
-                findNavController().navigate(R.id.newsDetailFragment)
+            binding.recycler.adapter = NewsAdapter(it.articles as ArrayList<Article?>) { it1 ->
+                newsList.addAll(listOf(it1))
+                val action = HomeFragmentDirections.actionHomeFragmentToNewsDetailFragment(it1)
+                findNavController().navigate(action)
             }
         }
     }
-
 }

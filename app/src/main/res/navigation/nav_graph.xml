@@ -22,10 +22,15 @@
         <action
             android:id="@+id/action_homeFragment_to_newsDetailFragment"
             app:destination="@id/newsDetailFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/newsDetailFragment"
         android:name="com.example.moviesapplication.ui.fragments.NewsDetailFragment"
         android:label="fragment_news_detail"
-        tools:layout="@layout/fragment_news_detail" />
+        tools:layout="@layout/fragment_news_detail" >
+        <argument
+            android:name="newsDetail"
+            app:argType="com.example.moviesapplication.data.model.Article" />
+    </fragment>
 </navigation>
