@@ -5,17 +5,15 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-abstract class RetrofitClient { //TODO Retrofitin instance'sini olusturduk.. Sebebi her sayfada tekrar tekrar uretmek zorunda kalmamak..
-    //TODO abstract yaptik çünkü aynı isimde bir nesnesi daha oluşturulmasın diye
+abstract class RetrofitClient {
 
     companion object {
-        @Volatile //TODO Aynı anda birden çok threadin erişimini engellemek için..
+        @Volatile
         private var INSTANCE: Retrofit? = null
 
         fun getRetrofit():Retrofit {
             return INSTANCE ?: run {
-
-                synchronized(this) { // Aynı anda birden çok threadin erişimini engellemek için..
+                synchronized(this) {
                     Retrofit.Builder()
                         .addConverterFactory(GsonConverterFactory.create())
                         .baseUrl(Constant.BASE_URL)

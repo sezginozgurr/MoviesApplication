@@ -1,10 +1,14 @@
 package com.example.moviesapplication.data.repository
 
+import androidx.fragment.app.viewModels
 import com.example.moviesapplication.data.service.ApiService
+import com.example.moviesapplication.data.service.RetrofitClient
 
-class HomePageRepository(private val service: ApiService) {
-    //TODO Genel de repository, data ve room olan projelerde genel de eğer apiden veri gelmez ise roomda kaydedilen son veriyi göstermek için kullanılır
-    //TODO Yada roomdan göstermesekte arada bir katman olarak kullanabilirsin.. Viewmodelden buraya, burdan apiye ulaşabilrisin
-    // Repository genel olarak verileri(bilgileri,dataları) ulaştığın dağıtıcı
-    fun getAllMovies(id : Int) = service.getMovies(id)
+class HomePageRepository() {
+
+    private val service = RetrofitClient.getRetrofit().create(ApiService::class.java)
+
+    fun getAllMovies(id: Int) {
+        service.getMovies(id)
+    }
 }
