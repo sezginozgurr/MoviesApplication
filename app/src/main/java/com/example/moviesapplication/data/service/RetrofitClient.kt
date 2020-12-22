@@ -1,32 +1,36 @@
 package com.example.moviesapplication.data.service
 
-import com.example.moviesapplication.Util.Constant
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-abstract class RetrofitClient {
-
+class RetrofitClient {
     companion object {
+
+        val baseURL = "https://jsonplaceholder.typicode.com/"
+
         @Volatile
         private var INSTANCE: Retrofit? = null
-
-        fun getRetrofit():Retrofit {
-            return INSTANCE ?: run {
-                synchronized(this) {
-                    Retrofit.Builder()
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .baseUrl(Constant.BASE_URL)
-                        .client(OkHttpClient.Builder().addInterceptor { chain ->
-                            val request = chain.request()
-                            val newRequest = request.newBuilder()
-                                .addHeader("", "")
-                                .build()
-                            chain.proceed(newRequest)
-                        }.build())
-                        .build()
+        fun getRetrofit(): Retrofit {
+            synchronized(this) {
+                INSTANCE?.let {
+                    return it
                 }
+
+                INSTANCE = Retrofit.Builder()
+                    .baseUrl(baseURL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+
+                return INSTANCE as Retrofit
             }
         }
     }
 }
+
+//.client(OkHttpClient.Builder().addInterceptor { chain ->
+//    val request = chain.request()
+//    val newRequest = request.newBuilder()
+//        .addHeader("", "")
+//        .build()
+//    chain.proceed(newRequest)
+//}.build())

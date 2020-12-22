@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.moviesapplication.data.model.MoviesResponse
 import com.example.moviesapplication.data.model.TvShow
 import com.example.moviesapplication.databinding.FragmentHomeBinding
-import com.example.moviesapplication.ui.adapter.MoviesAdapter
 import com.example.moviesapplication.ui.vm.HomePageViewModel
 
 
@@ -33,7 +32,7 @@ class HomeFragment : Fragment() {
         val homeViewModel =
             ViewModelProvider(this, HomePageViewModel.Factory()).get(HomePageViewModel::class.java)
         homeViewModel.moviesResponses.observe(viewLifecycleOwner) {
-            binding.recycler.adapter
+            Toast.makeText(context, it[1].id.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
