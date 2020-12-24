@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface ApiService { //TODO Base urlden sonra yapılacak işlem ve gidilecek endpointleri topladığımız interface
 
     @GET("top-headlines")
-    fun getMovies(
+    fun getNews(
         @Query("country") country: String = "tr",
         @Query("apiKey") apiKey: String = Constant.API_KEY
     ): Call<NewsResponse>

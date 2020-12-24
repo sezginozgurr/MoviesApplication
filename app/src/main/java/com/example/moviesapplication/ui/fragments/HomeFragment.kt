@@ -33,13 +33,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val homeViewModel =
-            ViewModelProvider(this, HomePageViewModel.Factory()).get(HomePageViewModel::class.java)
-        homeViewModel.moviesResponses.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it.status.toString(), Toast.LENGTH_SHORT).show()
-
+        val homeViewModel = ViewModelProvider(this, HomePageViewModel.Factory()).get(HomePageViewModel::class.java)
+        homeViewModel.moviesResponse.observe(viewLifecycleOwner) {
             binding.recycler.adapter = NewsAdapter(it.articles as ArrayList<Article?>) { it1 ->
                 newsList.addAll(listOf(it1))
+
                 val action = HomeFragmentDirections.actionHomeFragmentToNewsDetailFragment(it1)
                 findNavController().navigate(action)
             }
