@@ -22,7 +22,6 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private var newsList = ArrayList<Article>()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,4 +45,5 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
 }

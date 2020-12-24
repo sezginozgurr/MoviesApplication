@@ -30,20 +30,14 @@ class NewsDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUi()
-        binding.collapsing.title = "Son Dakika"
     }
 
     private fun setUi() {
-        binding.includeContent.title.text = args.newsDetail.title
-        binding.includeContent.content.text =
-            "${args.newsDetail.content} ${args.newsDetail.content} ${args.newsDetail.content} "
-        binding.includeContent.publishAt.text = args.newsDetail.publishedAt
+        binding.title.text = args.newsDetail.title
+        binding.content.text =args.newsDetail.content
+        binding.publishAt.text = args.newsDetail.publishedAt
         context?.let {
             Glide.with(it).load(args.newsDetail.urlToImage).into(binding.detailIamge)
         }
-        //Collaps olmazsa
-        /*binding.title.text = args.newsDetail.title
-        binding.content.text = args.newsDetail.content
-        binding.publishAt.text = args.newsDetail.publishedAt*/
     }
 }
