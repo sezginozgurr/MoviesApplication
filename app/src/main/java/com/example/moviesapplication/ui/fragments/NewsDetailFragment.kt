@@ -30,7 +30,7 @@ class NewsDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUi()
-        binding.collapsing.title = "Haberler"
+        binding.collapsing.title = "Son Dakika"
     }
 
     private fun setUi() {
