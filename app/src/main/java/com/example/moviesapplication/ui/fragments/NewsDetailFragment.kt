@@ -1,10 +1,12 @@
 package com.example.moviesapplication.ui.fragments
 
+import android.app.ActionBar
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.view.SupportActionModeWrapper
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -27,10 +29,21 @@ class NewsDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.title.text = args.newsDetail.title
-        binding.content.text = args.newsDetail.content
-        binding.publishAt.text = args.newsDetail.publishedAt
-        context?.let { Glide.with(it).load(args.newsDetail.urlToImage).into(binding.detailIamge) }
+        setUi()
+        binding.collapsing.title = "Haberler"
     }
 
+    private fun setUi() {
+        binding.includeContent.title.text = args.newsDetail.title
+        binding.includeContent.content.text =
+            "${args.newsDetail.content} ${args.newsDetail.content} ${args.newsDetail.content} "
+        binding.includeContent.publishAt.text = args.newsDetail.publishedAt
+        context?.let {
+            Glide.with(it).load(args.newsDetail.urlToImage).into(binding.detailIamge)
+        }
+        //Collaps olmazsa
+        /*binding.title.text = args.newsDetail.title
+        binding.content.text = args.newsDetail.content
+        binding.publishAt.text = args.newsDetail.publishedAt*/
+    }
 }
