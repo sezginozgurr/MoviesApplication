@@ -28,19 +28,22 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val homeViewModel = ViewModelProvider(this, HomePageViewModel.Factory()).get(HomePageViewModel::class.java)
-        homeViewModel.moviesResponse.observe(viewLifecycleOwner) {
+        val homeViewModel =
+            ViewModelProvider(this, HomePageViewModel.Factory()).get(HomePageViewModel::class.java)
+        homeViewModel.getNews()
+        homeViewModel.newsResponse.observe(viewLifecycleOwner) {
             binding.recycler.adapter = NewsAdapter(it.articles as ArrayList<Article?>) { it1 ->
                 newsList.addAll(listOf(it1))
-
                 val action = HomeFragmentDirections.actionHomeFragmentToNewsDetailFragment(it1)
                 findNavController().navigate(action)
             }
+        }
+        homeViewModel.errorBody?.observe(viewLifecycleOwner) {
+            Toast.makeText(context, "Cano olmadi tekrar dene", Toast.LENGTH_SHORT).show()
         }
     }
 

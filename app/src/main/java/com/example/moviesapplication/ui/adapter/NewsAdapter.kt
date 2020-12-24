@@ -12,7 +12,7 @@ import com.example.moviesapplication.data.model.Article
 class NewsAdapter(
     private val articleList: ArrayList<Article?>,
     private val onClick: (Article) -> Unit
-) :
+):
     RecyclerView.Adapter<NewsAdapter.MoviesHolder>() {
 
     class MoviesHolder(container: ViewGroup) :

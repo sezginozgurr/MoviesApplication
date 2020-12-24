@@ -1,5 +1,7 @@
 package com.example.moviesapplication.ui.vm
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,15 +15,14 @@ import retrofit2.Callback
 
 class HomePageViewModel : ViewModel() {
 
-    private lateinit var repository: HomePageRepository
-
-    private val mutableMovies: MutableLiveData<NewsResponse> = MutableLiveData()
-    val moviesResponse: LiveData<NewsResponse> = mutableMovies
+    private var repository= HomePageRepository()
+    private val mutableNews: MutableLiveData<NewsResponse> = MutableLiveData()
+    val newsResponse: LiveData<NewsResponse> = mutableNews
     val errorBody: MutableLiveData<String>? = null
 
     fun getNews(){
         repository.getNews({
-            mutableMovies.value = it
+            mutableNews.value = it
         }, {
             errorBody?.value = it
         })

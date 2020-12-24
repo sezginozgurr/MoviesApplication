@@ -9,13 +9,13 @@ import retrofit2.Callback
 class HomePageRepository {
 
     private val service = RetrofitClient.getRetrofit().create(ApiService::class.java)
-    val moviesResponse: Call<NewsResponse> = service.getNews()
+    val newsResponse: Call<NewsResponse> = service.getNews()
 
     fun getNews(
         responseHandle: (NewsResponse) -> Unit,
         errorHandle: (String) -> Unit
     ) {
-        moviesResponse.enqueue(object :
+        newsResponse.enqueue(object :
             Callback<NewsResponse> {
             override fun onResponse(
                 call: Call<NewsResponse>,
