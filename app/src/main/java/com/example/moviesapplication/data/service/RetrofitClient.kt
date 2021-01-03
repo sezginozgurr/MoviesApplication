@@ -1,12 +1,23 @@
 package com.example.moviesapplication.data.service
 
+import com.example.moviesapplication.BuildConfig
+import com.example.moviesapplication.Util.Constant
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient {
+
+//    init {
+//        val logging = HttpLoggingInterceptor()
+//        logging.level = HttpLoggingInterceptor.Level.BODY
+//        okhttp3client.addInterceptor(logging)
+//    }
+
     companion object {
 
-        val baseURL = "https://newsapi.org/v2/"
+        //   private val okhttp3client = OkHttpClient.Builder()
 
         @Volatile
         private var INSTANCE: Retrofit? = null
@@ -17,8 +28,23 @@ class RetrofitClient {
                 }
 
                 INSTANCE = Retrofit.Builder()
-                    .baseUrl(baseURL)
+                    .baseUrl(Constant.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .client(
+                        OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+                            level =
+                                when {
+                                    BuildConfig.DEBUG -> {
+                                        HttpLoggingInterceptor.Level.BODY
+                                    }
+                                    else -> {
+                                        HttpLoggingInterceptor.Level.NONE
+                                    }
+                                }
+                        }
+                        )
+                            .build()
+                    )
                     .build()
 
                 return INSTANCE as Retrofit
@@ -26,11 +52,3 @@ class RetrofitClient {
         }
     }
 }
-
-//.client(OkHttpClient.Builder().addInterceptor { chain ->
-//    val request = chain.request()
-//    val newRequest = request.newBuilder()
-//        .addHeader("", "")
-//        .build()
-//    chain.proceed(newRequest)
-//}.build())

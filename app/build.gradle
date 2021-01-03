@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.moviesapplication"
+        applicationId "com.example.newsapplication"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -33,8 +33,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        viewBinding true
+    buildFeatures{
+        dataBinding true
     }
 }
 
@@ -60,4 +60,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
+
 }

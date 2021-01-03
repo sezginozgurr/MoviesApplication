@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.fragment.findNavController
-import com.example.moviesapplication.R
 import com.example.moviesapplication.data.model.Article
 import com.example.moviesapplication.databinding.FragmentHomeBinding
 import com.example.moviesapplication.ui.adapter.NewsAdapter
@@ -20,28 +17,36 @@ import com.example.moviesapplication.ui.vm.HomePageViewModel
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private var newsList = ArrayList<Article>()
+    lateinit var homeViewModel: HomePageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val homeViewModel =
+        homeViewModel =
             ViewModelProvider(this, HomePageViewModel.Factory()).get(HomePageViewModel::class.java)
-        homeViewModel.getNews()
+
+        initialize()
+    }
+
+    private fun initialize() {
         homeViewModel.newsResponse.observe(viewLifecycleOwner) {
-            binding.recycler.adapter = NewsAdapter(it.articles as ArrayList<Article?>) { it1 ->
-                newsList.addAll(listOf(it1))
-                val action = HomeFragmentDirections.actionHomeFragmentToNewsDetailFragment(it1)
-                findNavController().navigate(action)
-            }
+            val adapter =
+                NewsAdapter(requireContext(), it.articles as ArrayList<Article>) { article ->
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToNewsDetailFragment(article)
+                    findNavController().navigate(action)
+                }
+            binding.recycler.adapter = adapter
+            binding.executePendingBindings()
         }
+
         homeViewModel.errorBody?.observe(viewLifecycleOwner) {
             Toast.makeText(context, "Cano olmadi tekrar dene", Toast.LENGTH_SHORT).show()
         }
