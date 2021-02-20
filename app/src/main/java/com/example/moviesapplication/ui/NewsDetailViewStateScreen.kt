@@ -1,7 +1,7 @@
 package com.example.moviesapplication.ui
 
-import com.example.moviesapplication.Util.ConvertDateTime
 import com.example.moviesapplication.data.model.Article
+import com.example.moviesapplication.util.ConvertDateTime
 
 data class NewsDetailViewStateScreen(val article: Article) {
 

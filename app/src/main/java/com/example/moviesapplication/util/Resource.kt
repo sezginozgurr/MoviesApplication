@@ -1,4 +1,4 @@
-package com.example.moviesapplication.Util
+package com.example.moviesapplication.util
 
 enum class Status {
         LOADING,
