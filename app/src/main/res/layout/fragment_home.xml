@@ -6,31 +6,66 @@
 
     <data>
 
+        <import type="com.example.moviesapplication.util.Status" />
+
+        <import type="android.view.View" />
+
         <variable
-            name="HomeFragmentViewStateScreen"
-            type="com.example.moviesapplication.ui.fragments.HomeFragment" />
+            name="adapter"
+            type="com.example.moviesapplication.ui.adapter.NewsAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.example.moviesapplication.vm.HomePageViewModel" />
+
+        <variable
+            name="state"
+            type="Status" />
     </data>
 
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        tools:context=".ui.fragments.HomeFragment">
+        tools:context=".ui.fragment.HomeFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:adapter="@{adapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="@{state == Status.SUCCESS ? View.VISIBLE : View.GONE,default=gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/row_movies_list" />
 
-        <!--    <ProgressBar-->
-        <!--        android:id="@+id/progress"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"/>-->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{state == Status.LOADING ? View.VISIBLE : View.GONE,default=visible }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_home_error"
+            android:visibility="@{state == Status.ERROR ? View.VISIBLE : View.GONE,default=gone }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
