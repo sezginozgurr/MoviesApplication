@@ -8,14 +8,14 @@
 
         <variable
             name="FragmentSplash"
-            type="com.example.moviesapplication.ui.fragments.SplashFragment" />
+            type="com.example.moviesapplication.ui.splash.SplashFragment" />
     </data>
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragments.SplashFragment">
+        tools:context=".ui.splash.SplashFragment">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lotties"

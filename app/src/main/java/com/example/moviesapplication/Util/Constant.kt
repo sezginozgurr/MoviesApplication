@@ -1,7 +1,5 @@
-package com.example.moviesapplication.Util
+package com.example.moviesapplication.util
 
-object Constant { //TODO Uygulama boyunca ayakta kalacak. Dropdown key içinde kullanılabilir
-
-    val BASE_URL = "https://newsapi.org/v2/"
-    val API_KEY = "1ad44ae016a1433ba8d0eb2698a8529d"
+object Constant {
+    const val API_KEY = "2ee4c8f1b3a041459c2f883f09379f75"
 }

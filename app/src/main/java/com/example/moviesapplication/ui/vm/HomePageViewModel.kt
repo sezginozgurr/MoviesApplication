@@ -1,44 +1,38 @@
 package com.example.moviesapplication.ui.vm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.example.moviesapplication.data.Resource
 import com.example.moviesapplication.data.model.NewsResponse
 import com.example.moviesapplication.data.repository.HomePageRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomePageViewModel : ViewModel() {
-
-    private var repository = HomePageRepository()
-    private val mutableNews: MutableLiveData<NewsResponse> = MutableLiveData()
-    val newsResponse: LiveData<NewsResponse> = mutableNews
-    val errorBody: MutableLiveData<String>? = null
+@HiltViewModel
+class HomePageViewModel @Inject constructor(private val homePageRepository: HomePageRepository) :
+    ViewModel() {
+    private val _news = MutableLiveData<Resource<NewsResponse?>>()
+    val news: LiveData<Resource<NewsResponse?>> get() = _news
 
     init {
         getNews()
     }
 
     private fun getNews() {
-        repository.getNews({
-            mutableNews.value = it
-        }, {
-            errorBody?.value = it
-        })
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.d("viewModel cleared", "cleared")
-    }
-
-    class Factory : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(HomePageViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return HomePageViewModel() as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel ")
+        viewModelScope.launch {
+            homePageRepository.getNews()
+                .onStart { emit(Resource.loading()) }
+                .catch { emit(Resource.error(it.message ?: it.toString())) }
+                .collect {
+                    _news.postValue(it)
+                }
         }
     }
+
 }
