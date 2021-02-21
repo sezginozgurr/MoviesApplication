@@ -1,4 +1,4 @@
-package com.example.moviesapplication.ui.fragments
+package com.example.moviesapplication.ui.newsdetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.moviesapplication.databinding.FragmentNewsDetailBinding
-import com.example.moviesapplication.ui.NewsDetailViewStateScreen
 
 class NewsDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentNewsDetailBinding
-    val articles: NewsDetailFragmentArgs by navArgs()
+    private val articleArguments: NewsDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +27,7 @@ class NewsDetailFragment : Fragment() {
     }
 
     private fun setupUI() {
-        articles.newsDetail.let { article ->
+        articleArguments.newsDetail.let { article ->
             binding.newsDetailFragmentViewState = NewsDetailViewStateScreen(article)
         }
     }
